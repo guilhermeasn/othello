@@ -2,3 +2,56 @@
     margin: 0;
     padding: 0;
 }
+
+main {
+    text-align: center;
+    margin: 10px auto;
+}
+
+.board-root {
+    border: 3px solid #234;
+    border-radius: 10px;
+    padding: 5px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.board-row {
+    display: flex;
+}
+
+.board-cell-fill, .board-cell-empty {
+    border: 2px solid #789;
+    border-radius: 5px;
+    margin: 1px;
+    width: 4rem;
+    height: 4rem;
+}
+
+.board-cell-empty {
+    cursor: pointer;
+}
+
+.board-cell-empty:hover {
+    background-color: #ddd;
+}
+
+.board-black, .board-white {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    margin: .5rem;
+}
+
+.board-black {
+    background-color: #333;
+    box-shadow: #111 2px 2px 2px 2px;
+    cursor: default !important;
+}
+
+.board-white {
+    background-color: #ccc;
+    box-shadow: #444 3px 2px 2px 2px;
+    cursor: pointer;
+    cursor: default !important;
+}
