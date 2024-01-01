@@ -15,10 +15,11 @@ export type BoardData = [
 ]
 
 export type BoardProps = {
-    data : BoardData
+    data : BoardData,
+    onClick ?: (row : BoardIndex, cell : BoardIndex) => void;
 }
 
-export default function Board({ data } : BoardProps) {
+export default function Board({ data, onClick = () => {} } : BoardProps) {
 
     return (
 
@@ -30,7 +31,7 @@ export default function Board({ data } : BoardProps) {
 
                     { Array(8).fill(null).map((_, cell) => (
 
-                        <div key={ cell } className={ `board-cell board-cell-${ data[row][cell] }` }>
+                        <div key={ cell } onClick={ data[row][cell] === 'play' ? () => onClick(row as BoardIndex, cell as BoardIndex) : undefined } className={ `board-cell board-cell-${ data[row][cell] }` }>
 
                             <div className={ `board-${ data[row][cell] }` } />
 
