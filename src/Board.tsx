@@ -1,12 +1,21 @@
+export type BoardPiece = 'black' | 'white';
+
+export type BoardCell = BoardPiece | 'play' | 'empty';
+
+export type BoardIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+
+export type BoardRow = [
+    BoardCell, BoardCell, BoardCell, BoardCell,
+    BoardCell, BoardCell, BoardCell, BoardCell
+]
+
+export type BoardData = [
+    BoardRow, BoardRow, BoardRow, BoardRow,
+    BoardRow, BoardRow, BoardRow, BoardRow
+]
+
 export type BoardProps = {
-
-    /**
-     * - ```true``` is black piece
-     * - ```false``` is white piece
-     * - ```undefined``` is empty
-     */
-    data : Array<Array<boolean | undefined>>;
-
+    data : BoardData
 }
 
 export default function Board({ data } : BoardProps) {
@@ -21,13 +30,9 @@ export default function Board({ data } : BoardProps) {
 
                     { Array(8).fill(null).map((_, cell) => (
 
-                        <div key={ cell } className={ "board-cell-" + (typeof data[row][cell] === 'boolean' ? 'fill' : 'empty') }>
+                        <div key={ cell } className={ `board-cell board-cell-${ data[row][cell] }` }>
 
-                            <div className={ (
-                                data?.[row]?.[cell] === true ? 'board-black' : (
-                                    data?.[row]?.[cell] === false ? 'board-white' : 'board-empty'
-                                )
-                            ) } />
+                            <div className={ `board-${ data[row][cell] }` } />
 
                         </div>
 
