@@ -12,9 +12,10 @@ export default function App() {
         <main>
             <Board
                 data={ othello.getBoard() }
-                movies={ nextMove?.moves ?? [] }
+                movies={ nextMove === null ? [] : nextMove.moves }
                 onClick={ position => setNextMove(othello.makeMove(position)) }
             />
+            <p><button onClick={ () => setNextMove(othello.backMove()) } disabled={ !othello.isReturnable() }>Back</button></p>
             <p>{ nextMove?.player ?? 'Game End' }</p>
         </main>
 

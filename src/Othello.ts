@@ -1,3 +1,7 @@
+/**
+ * Othello
+ * @author Guilherme Neves
+ */
 
 export type Player = 'black' | 'white';
 export type Cell = Player | 'empty';
@@ -15,7 +19,7 @@ export type NextMove = {
 export type History = {
     player : Player;
     board : Board;
-} | null;
+};
 
 export default class Othello {
 
@@ -23,7 +27,7 @@ export default class Othello {
     private _moves : Position[];
     private _board : Board;
 
-    private _history : History;
+    private _histories : History[];
 
     constructor() {
 
@@ -31,7 +35,7 @@ export default class Othello {
         this._moves = [];
         this._board = [];
 
-        this._history = null;
+        this._histories = [];
 
         for(let row = 0; row < 8; row++) {
 
@@ -110,7 +114,7 @@ export default class Othello {
     }
 
     isReturnable() : boolean {
-        return this._history !== null;
+        return this._histories.length > 0;
     }
 
     isFull() : boolean {
@@ -173,10 +177,12 @@ export default class Othello {
             throw Error('Move is not valid');
         }
 
-        this._history = {
+        this._histories.push({
             player: this._player,
-            board: this._board
-        };
+            board: structuredClone(this._board)
+        });
+
+        this._moves.push(position);
 
         this._board[position.row][position.col] = this._player;
 
@@ -228,8 +234,22 @@ export default class Othello {
 
     }
 
-    // backMove() : NextMove {
+    backMove() : NextMove {
 
-    // }
+        const history : History | null = this._histories.at(-1) ?? null;
+        console.log(history);
+
+        if(history !== null) {
+
+            this._board = history.board;
+            this._player = history.player;
+
+            this._histories.pop();
+
+        }
+
+        return this.getNextMove();
+
+    }
 
 }
