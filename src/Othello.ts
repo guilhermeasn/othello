@@ -12,17 +12,26 @@ export type NextMove = {
     moves : Position[];
 } | GameEnd;
 
+export type History = {
+    player : Player;
+    board : Board;
+} | null;
+
 export default class Othello {
 
     private _player : Player;
     private _moves : Position[];
     private _board : Board;
 
+    private _history : History;
+
     constructor() {
 
         this._player = 'black';
         this._moves = [];
         this._board = [];
+
+        this._history = null;
 
         for(let row = 0; row < 8; row++) {
 
@@ -100,6 +109,10 @@ export default class Othello {
         }
     }
 
+    isReturnable() : boolean {
+        return this._history !== null;
+    }
+
     isFull() : boolean {
         return this._board.every(row => row.every(cell => cell !== 'empty'));
     }
@@ -160,6 +173,11 @@ export default class Othello {
             throw Error('Move is not valid');
         }
 
+        this._history = {
+            player: this._player,
+            board: this._board
+        };
+
         this._board[position.row][position.col] = this._player;
 
         for(let nextRow = -1; nextRow <= 1; nextRow++) {
@@ -209,5 +227,9 @@ export default class Othello {
         };
 
     }
+
+    // backMove() : NextMove {
+
+    // }
 
 }
