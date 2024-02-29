@@ -7,41 +7,70 @@ export const startBoard : Array<[ BoardIndex, BoardIndex, BoardPiece ]> = [
     [ 4, 4, 'white' ]
 ];
 
-export function calculateNextPlay(data : BoardData, current : BoardPiece) : BoardData {
+export function calculateBoard(data : BoardData, current : BoardPiece, target ?: [ BoardIndex, BoardIndex]) : BoardData {
 
     const oposite : BoardPiece = current === 'black' ? 'white' : 'black';
 
-    const replacers : Array<[ RegExp | string, string ]> = [
-        [ 'play', 'empty' ], // clear
-        [ new RegExp(`empty-((${oposite}-)+)${current}`, 'gim'), `play-$1${current}` ], // left to right
-        [ new RegExp(`${current}((-${oposite})+)-empty`, 'gim'), `${current}$1-play` ], // right to left
-        [ new RegExp(`empty((([-|][a-z]+){7}[-|]${oposite})+)(([-|][a-z]+){7}[-|]${current})`, 'gim'), `play$1$4` ], // top to bottom
-        [ new RegExp(`${current}((([-|][a-z]+){7}[-|]${oposite})+)(([-|][a-z]+){7}[-|])empty`, 'gim'), `${current}$1$4play` ], // bottom to top
-    ];
+    data = data.map(row => row.map(cell => cell === 'play' ? 'empty' : cell)) as BoardData;
 
-    let board : string = data.map(row => row.join('-')).join('|');
-    replacers.forEach(([ regex, pattern ]) => board = board.replaceAll(regex, pattern));
+    return data.map((row, indexRow) => {
+        return row.map((cell, indexCell) => {
 
-    return board.split('|').map(row => row.split('-')) as BoardData;
+            if(cell !== 'empty') return cell;
 
-}
+            let play : boolean = false;
+            let find : boolean = false;
 
-export function calculateReversi(data : BoardData, current : BoardPiece, row : BoardIndex, cell : BoardIndex) : BoardData {
+            loop: for(let c = indexCell + 1; c < 8; c++) {
+                switch(data[indexRow][c]) {
+                    case 'empty': break loop;
+                    case oposite: find = true; continue loop;
+                    case current: play = find; break loop;
+                }
+            }
 
-    const oposite : BoardPiece = current === 'black' ? 'white' : 'black';
-    let board : string = data.map((r, kr) => r.map((c, kc) => kr === row && kc === cell ? 'UPDATE' : c).join('-')).join('|');
+            return play ? 'play' : 'empty';
 
-    const replacers : Array<[ RegExp | string, string ]> = [
-        [ 'play', 'empty' ], // clear
-        [ new RegExp(`(UPDATE-(${oposite}-)*)${oposite}(-${current})`, 'gim'), `$1${current}$2` ], // left to right
-        [ new RegExp(`(${current}-(${oposite}-)*)${oposite}-UPDATE`, 'gim'), `$1${current}-UPDATE` ], // right to left
-        [ 'UPDATE', current ] // updated
-    ];
-
-    replacers.forEach(([ regex, pattern ]) => board = board.replaceAll(regex, pattern));
-
-    console.log(board.split('|').map(row => row.split('-')));
-
-    return board.split('|').map(row => row.split('-')) as BoardData;
+        });
+    }) as BoardData;
 
 }
+
+// export function calculateNextPlay(data : BoardData, current : BoardPiece) : BoardData {
+
+//     const oposite : BoardPiece = current === 'black' ? 'white' : 'black';
+
+//     const replacers : Array<[ RegExp | string, string ]> = [
+//         [ 'play', 'empty' ], // clear
+//         [ new RegExp(`empty-((${oposite}-)+)${current}`, 'gim'), `play-$1${current}` ], // left to right
+//         [ new RegExp(`${current}((-${oposite})+)-empty`, 'gim'), `${current}$1-play` ], // right to left
+//         [ new RegExp(`empty((([-|][a-z]+){7}[-|]${oposite})+)(([-|][a-z]+){7}[-|]${current})`, 'gim'), `play$1$4` ], // top to bottom
+//         [ new RegExp(`${current}((([-|][a-z]+){7}[-|]${oposite})+)(([-|][a-z]+){7}[-|])empty`, 'gim'), `${current}$1$4play` ], // bottom to top
+//     ];
+
+//     let board : string = data.map(row => row.join('-')).join('|');
+//     replacers.forEach(([ regex, pattern ]) => board = board.replaceAll(regex, pattern));
+
+//     return board.split('|').map(row => row.split('-')) as BoardData;
+
+// }
+
+// export function calculateReversi(data : BoardData, current : BoardPiece, row : BoardIndex, cell : BoardIndex) : BoardData {
+
+//     const oposite : BoardPiece = current === 'black' ? 'white' : 'black';
+//     let board : string = data.map((r, kr) => r.map((c, kc) => kr === row && kc === cell ? 'UPDATE' : c).join('-')).join('|');
+
+//     const replacers : Array<[ RegExp | string, string ]> = [
+//         [ 'play', 'empty' ], // clear
+//         [ new RegExp(`(UPDATE-(${oposite}-)*)${oposite}(-${current})`, 'gim'), `$1${current}$2` ], // left to right
+//         [ new RegExp(`(${current}-(${oposite}-)*)${oposite}-UPDATE`, 'gim'), `$1${current}-UPDATE` ], // right to left
+//         [ 'UPDATE', current ] // updated
+//     ];
+
+//     replacers.forEach(([ regex, pattern ]) => board = board.replaceAll(regex, pattern));
+
+//     console.log(board.split('|').map(row => row.split('-')));
+
+//     return board.split('|').map(row => row.split('-')) as BoardData;
+
+// }
