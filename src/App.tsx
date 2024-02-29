@@ -16,6 +16,7 @@ export default function App() {
                 onClick={ position => setNextMove(othello.makeMove(position)) }
             />
             <p><button onClick={ () => setNextMove(othello.backMove()) } disabled={ !othello.isReturnable() }>Back</button></p>
+            <p><button onClick={ () => console.log(othello.getGameString()) }>Salvar</button></p>
             <p>{ nextMove?.player ?? 'Game End' }</p>
         </main>
 

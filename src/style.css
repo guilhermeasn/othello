@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+p {
+    margin: 10px;
+}
+
 main {
     text-align: center;
     margin: 10px auto;
@@ -14,6 +18,7 @@ main {
     padding: 5px;
     display: inline-block;
     width: fit-content;
+    background-color: #dfd;
 }
 
 .board-row {
@@ -36,13 +41,17 @@ main {
 }
 
 .board-black {
-    background-color: #333;
-    box-shadow: #111 2px 2px 2px 2px;
+    background-color: #222;
+    box-shadow: #000 2px 2px 2px 2px;
+    animation-name: opacity1;
+    animation-duration: 3s;
 }
 
 .board-white {
-    background-color: #ccc;
-    box-shadow: #444 3px 2px 2px 2px;
+    background-color: #ddd;
+    box-shadow: #555 3px 2px 2px 2px;
+    animation-name: opacity2;
+    animation-duration: 3s;
 }
 
 .board-cell-play {
@@ -52,4 +61,14 @@ main {
 
 .board-cell-play:hover {
     background-color: #aaa;
+}
+
+@keyframes opacity1 {
+    from {opacity: .5;}
+    to {opacity: 1;}
+}
+
+@keyframes opacity2 {
+    from {opacity: .5;}
+    to {opacity: 1;}
 }

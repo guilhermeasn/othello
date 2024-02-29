@@ -239,12 +239,10 @@ export default class Othello {
         const history : History | null = this._histories.at(-1) ?? null;
 
         if(history !== null) {
-
             this._board = history.board;
             this._player = history.player;
-
             this._histories.pop();
-
+            this._moves.pop();
         }
 
         return this.getNextMove();
