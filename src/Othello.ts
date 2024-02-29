@@ -237,7 +237,6 @@ export default class Othello {
     backMove() : NextMove {
 
         const history : History | null = this._histories.at(-1) ?? null;
-        console.log(history);
 
         if(history !== null) {
 
