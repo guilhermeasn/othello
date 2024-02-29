@@ -1,19 +1,27 @@
 
 export type Player = 'black' | 'white';
-export type Cell = Player | null;
+export type Cell = Player | 'empty';
 export type Board = Cell[][];
+
+export type Status = Record<Cell, number>;
+export type GameEnd = null;
+
 export type Move = Record<'row' | 'col', number>;
+export type NextMove = {
+    player : Player;
+    moves : Move[];
+} | GameEnd;
 
 export default class Othello {
 
     private _player : Player;
-    private _movies : Move[];
+    private _moves : Move[];
     private _board : Board;
 
     constructor() {
 
         this._player = 'black';
-        this._movies = [];
+        this._moves = [];
         this._board = [];
 
         for(let row = 0; row < 8; row++) {
@@ -22,7 +30,7 @@ export default class Othello {
 
             for(let col = 0; col < 8; col++) {
 
-                this._board[row].push(null);
+                this._board[row].push('empty');
 
                 if((row === 3 || row === 4) && (col === 3 || col === 4)) {
                     this._board[row][col] = row === col ? 'white' : 'black';
@@ -37,19 +45,19 @@ export default class Othello {
         return this._player;
     }
 
-    getMovies() : Move[] {
-        return this._movies;
+    getMoves() : Move[] {
+        return this._moves;
     }
 
     getBoard() : Board {
         return this._board;
     }
 
-    getGame() : string {
+    getGameString() : string {
         
         let game : string = '';
 
-        this._movies.forEach(({ row, col }) => {
+        this._moves.forEach(({ row, col }) => {
             game += ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'][col] + (row + 1) + '-';
         });
 
@@ -57,9 +65,48 @@ export default class Othello {
 
     }
 
+    getMovesByString(gameString : string) : Move[] {
+
+        gameString = gameString.toLowerCase().trim();
+        if(gameString === '') return [];
+
+        if(!/^([a-h][1-8]-)*([a-h][1-8])$/.test(gameString)) {
+            throw Error('Game String incorrect format');
+        }
+
+        let moves : Move[] = [];
+
+        gameString.split('-').forEach(move => {
+            moves.push({
+                row: parseInt(move.charAt(1)) - 1,
+                col: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].findIndex(v => v === move.charAt(0))
+            })
+        });
+
+        return moves;
+
+    }
+
+    getStatus() : Status {
+        const status : Status = { black: 0, white: 0, empty: 0 };
+        this._board.forEach(row => row.forEach(cell => status[cell]++))
+        return status;
+    }
+
+    getNextMove() : NextMove {
+        return {
+            player: this._player,
+            moves: this.validMoves()
+        }
+    }
+
+    isFull() : boolean {
+        return this._board.every(row => row.every(cell => cell !== 'empty'));
+    }
+
     isValidMove(move : Move) : boolean {
 
-        if(this._board[move.row][move.col] !== null) return false;
+        if(this._board[move.row][move.col] !== 'empty') return false;
 
         for(let nextRow = -1; nextRow <= 1; nextRow++) {
             for(let nextCol = -1; nextCol <= 1; nextCol++) {
@@ -72,7 +119,7 @@ export default class Othello {
 
                 while(row >= 0 && row < 8 && col >= 0 && col < 8) {
 
-                    if(this._board[row][col] === null) break;
+                    if(this._board[row][col] === 'empty') break;
                     if(this._board[row][col] === this._player) {
                         if(opposite) return true;
                         break;
@@ -91,19 +138,75 @@ export default class Othello {
 
     }
 
-    validMovies() : Move[] {
+    validMoves() : Move[] {
 
-        const movies : Move[] = []
+        const moves : Move[] = []
 
         for(let row = 0; row < 8; row++) {
             for(let col = 0; col < 8; col++) {
                 if(this.isValidMove({ row, col })) {
-                    movies.push({ row, col });
+                    moves.push({ row, col });
                 }
             }
         }
 
-        return movies;
+        return moves;
+
+    }
+
+    makeMove(move : Move) : NextMove {
+
+        if(!this.isValidMove(move)) {
+            throw Error('Move is not valid');
+        }
+
+        this._board[move.row][move.col] = this._player;
+
+        for(let nextRow = -1; nextRow <= 1; nextRow++) {
+            for(let nextCol = -1; nextCol <= 1; nextCol++) {
+
+                if(nextRow === 0 && nextCol === 0) continue;
+
+                const flip : Move[] = [];
+
+                let opposite = false;
+                let row = move.row + nextRow;
+                let col = move.col + nextCol;
+
+                while(row >= 0 && row < 8 && col >= 0 && col < 8) {
+
+                    if(this._board[row][col] === 'empty') break;
+
+                    if(this._board[row][col] === this._player) {
+                        if(opposite) flip.forEach(({ row, col }) => this._board[row][col] = this._player);
+                        break;
+                    }
+
+                    flip.push({ row, col });
+                    opposite = true;
+                    row += nextRow;
+                    col += nextCol;
+
+                }
+
+            }
+
+        }
+
+        this._player = this._player === 'black' ? 'white' : 'black';
+        let moves : Move[] = this.validMoves();
+
+        if(moves.length === 0) {
+            this._player = this._player === 'black' ? 'white' : 'black';
+            moves = this.validMoves();
+        }
+
+        if(moves.length === 0) return null;
+
+        return {
+            player: this._player,
+            moves
+        };
 
     }
 
