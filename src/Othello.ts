@@ -6,24 +6,26 @@ export type Move = Record<'row' | 'col', number>;
 
 export default class Othello {
 
-    private current : Player;
-    private board : Board;
+    private _player : Player;
+    private _movies : Move[];
+    private _board : Board;
 
     constructor() {
 
-        this.current = 'black';
-        this.board = [];
+        this._player = 'black';
+        this._movies = [];
+        this._board = [];
 
         for(let row = 0; row < 8; row++) {
 
-            this.board.push([]);
+            this._board.push([]);
 
             for(let col = 0; col < 8; col++) {
 
-                this.board[row].push(null);
+                this._board[row].push(null);
 
                 if((row === 3 || row === 4) && (col === 3 || col === 4)) {
-                    this.board[row][col] = row === col ? 'white' : 'black';
+                    this._board[row][col] = row === col ? 'white' : 'black';
                 }
                 
             }
@@ -31,9 +33,33 @@ export default class Othello {
 
     }
 
+    getPlayer() : Player {
+        return this._player;
+    }
+
+    getMovies() : Move[] {
+        return this._movies;
+    }
+
+    getBoard() : Board {
+        return this._board;
+    }
+
+    getGame() : string {
+        
+        let game : string = '';
+
+        this._movies.forEach(({ row, col }) => {
+            game += ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'][col] + (row + 1) + '-';
+        });
+
+        return game.replace(/-$/, '');
+
+    }
+
     isValidMove(move : Move) : boolean {
 
-        if(this.board[move.row][move.col] !== null) return false;
+        if(this._board[move.row][move.col] !== null) return false;
 
         for(let nextRow = -1; nextRow <= 1; nextRow++) {
             for(let nextCol = -1; nextCol <= 1; nextCol++) {
@@ -46,8 +72,8 @@ export default class Othello {
 
                 while(row >= 0 && row < 8 && col >= 0 && col < 8) {
 
-                    if(this.board[row][col] === null) break;
-                    if(this.board[row][col] === this.current) {
+                    if(this._board[row][col] === null) break;
+                    if(this._board[row][col] === this._player) {
                         if(opposite) return true;
                         break;
                     }

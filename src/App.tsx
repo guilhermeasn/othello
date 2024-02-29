@@ -5,6 +5,7 @@ export default function App() {
 
     const othello = useMemo(() => new Othello(), []);
     console.log(othello.validMovies());
+    console.log(othello.getGame());
 
     return (
 
