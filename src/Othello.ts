@@ -6,16 +6,16 @@ export type Board = Cell[][];
 export type Status = Record<Cell, number>;
 export type GameEnd = null;
 
-export type Move = Record<'row' | 'col', number>;
+export type Position = Record<'row' | 'col', number>;
 export type NextMove = {
     player : Player;
-    moves : Move[];
+    moves : Position[];
 } | GameEnd;
 
 export default class Othello {
 
     private _player : Player;
-    private _moves : Move[];
+    private _moves : Position[];
     private _board : Board;
 
     constructor() {
@@ -45,7 +45,7 @@ export default class Othello {
         return this._player;
     }
 
-    getMoves() : Move[] {
+    getMoves() : Position[] {
         return this._moves;
     }
 
@@ -65,7 +65,7 @@ export default class Othello {
 
     }
 
-    getMovesByString(gameString : string) : Move[] {
+    getMovesByString(gameString : string) : Position[] {
 
         gameString = gameString.toLowerCase().trim();
         if(gameString === '') return [];
@@ -74,7 +74,7 @@ export default class Othello {
             throw Error('Game String incorrect format');
         }
 
-        let moves : Move[] = [];
+        let moves : Position[] = [];
 
         gameString.split('-').forEach(move => {
             moves.push({
@@ -104,9 +104,9 @@ export default class Othello {
         return this._board.every(row => row.every(cell => cell !== 'empty'));
     }
 
-    isValidMove(move : Move) : boolean {
+    isValidMove(position : Position) : boolean {
 
-        if(this._board[move.row][move.col] !== 'empty') return false;
+        if(this._board[position.row][position.col] !== 'empty') return false;
 
         for(let nextRow = -1; nextRow <= 1; nextRow++) {
             for(let nextCol = -1; nextCol <= 1; nextCol++) {
@@ -114,8 +114,8 @@ export default class Othello {
                 if(nextRow === 0 && nextCol === 0) continue;
 
                 let opposite = false;
-                let row = move.row + nextRow;
-                let col = move.col + nextCol;
+                let row = position.row + nextRow;
+                let col = position.col + nextCol;
 
                 while(row >= 0 && row < 8 && col >= 0 && col < 8) {
 
@@ -138,9 +138,9 @@ export default class Othello {
 
     }
 
-    validMoves() : Move[] {
+    validMoves() : Position[] {
 
-        const moves : Move[] = []
+        const moves : Position[] = []
 
         for(let row = 0; row < 8; row++) {
             for(let col = 0; col < 8; col++) {
@@ -154,24 +154,24 @@ export default class Othello {
 
     }
 
-    makeMove(move : Move) : NextMove {
+    makeMove(position : Position) : NextMove {
 
-        if(!this.isValidMove(move)) {
+        if(!this.isValidMove(position)) {
             throw Error('Move is not valid');
         }
 
-        this._board[move.row][move.col] = this._player;
+        this._board[position.row][position.col] = this._player;
 
         for(let nextRow = -1; nextRow <= 1; nextRow++) {
             for(let nextCol = -1; nextCol <= 1; nextCol++) {
 
                 if(nextRow === 0 && nextCol === 0) continue;
 
-                const flip : Move[] = [];
+                const flip : Position[] = [];
 
                 let opposite = false;
-                let row = move.row + nextRow;
-                let col = move.col + nextCol;
+                let row = position.row + nextRow;
+                let col = position.col + nextCol;
 
                 while(row >= 0 && row < 8 && col >= 0 && col < 8) {
 
@@ -194,7 +194,7 @@ export default class Othello {
         }
 
         this._player = this._player === 'black' ? 'white' : 'black';
-        let moves : Move[] = this.validMoves();
+        let moves : Position[] = this.validMoves();
 
         if(moves.length === 0) {
             this._player = this._player === 'black' ? 'white' : 'black';

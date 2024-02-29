@@ -1,18 +1,21 @@
-import { useMemo } from "react";
-import Othello from "./Othello";
+import { useMemo, useState } from "react";
+import Board from "./Board";
+import Othello, { NextMove } from "./Othello";
 
 export default function App() {
 
     const othello = useMemo(() => new Othello(), []);
-    console.log(othello);
-    console.log(othello.getNextMove());
+    const [ nextMove, setNextMove ] = useState<NextMove>(othello.getNextMove());
 
     return (
 
         <main>
-
-            
-
+            <Board
+                data={ othello.getBoard() }
+                movies={ nextMove?.moves ?? [] }
+                onClick={ position => setNextMove(othello.makeMove(position)) }
+            />
+            <p>{ nextMove?.player ?? 'Game End' }</p>
         </main>
 
     )
