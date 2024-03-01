@@ -60,6 +60,7 @@ export default function App() {
                 <label>Level:&nbsp;</label>
                 <select value={ level } onChange={ input => setLevel(input.target.value as Level) }>
                     <option value='alone'>Alone</option>
+                    <option disabled>------------------</option>
                     <option value='easy'>Easy Bot</option>
                     <option value='medium' disabled>Medium Bot</option>
                     <option value='hard' disabled>Hard Bot</option>
