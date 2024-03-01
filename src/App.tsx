@@ -21,7 +21,7 @@ export default function App() {
         if(nextMove && level !== 'alone' && nextMove.player !== user) {
             setTimeout(() => {
                     setNextMove(othello.makeMove(bot({
-                    board: othello.getBoard(),
+                    // board: othello.getBoard(),
                     next: nextMove,
                     level
                 })));
@@ -62,8 +62,8 @@ export default function App() {
                     <option value='alone'>Alone</option>
                     <option disabled>------------------</option>
                     <option value='easy'>Easy Bot</option>
-                    <option value='medium' disabled>Medium Bot</option>
-                    <option value='hard' disabled>Hard Bot</option>
+                    {/* <option value='medium'>Medium Bot</option> */}
+                    <option value='hard'>Hard Bot</option>
                 </select>
             </div>
 

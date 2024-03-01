@@ -50,14 +50,14 @@ main {
 
 .board-black {
     background-color: #111;
-    box-shadow: #000 3px 2px 2px 2px;
+    box-shadow: #000 2px 1px 1px 1px;
     animation-name: opacity1;
     animation-duration: 1.5s;
 }
 
 .board-white {
     background-color: #fff;
-    box-shadow: #000 3px 2px 2px 2px;
+    box-shadow: #000 2px 1px 1px 1px;
     animation-name: opacity2;
     animation-duration: 1.5s;
 }

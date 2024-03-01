@@ -107,10 +107,14 @@ export default class Othello {
     }
 
     getNextMove() : NextMove {
-        return {
+
+        const validMoves = this.validMoves();
+
+        return validMoves.length > 0 ? {
             player: this._player,
             moves: this.validMoves()
-        }
+        } : null;
+        
     }
 
     isReturnable() : boolean {
