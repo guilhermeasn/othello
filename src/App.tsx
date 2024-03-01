@@ -6,7 +6,7 @@ import Othello, { NextMove, Player, Status } from "./Othello";
 export default function App() {
 
     const [ user, setUser ] = useState<Player>();
-    const [ level, setLevel ] = useState<Level | 'alone'>('medium');
+    const [ level, setLevel ] = useState<Level | 'alone'>('alone');
     const [ othello, setOthello ] = useState<Othello>(new Othello());
     const [ nextMove, setNextMove ] = useState<NextMove>(null);
     
@@ -61,8 +61,8 @@ export default function App() {
                 <select value={ level } onChange={ input => setLevel(input.target.value as Level) }>
                     <option value='alone'>Alone</option>
                     <option value='easy'>Easy Bot</option>
-                    <option value='medium'>Medium Bot</option>
-                    <option value='hard'>Hard Bot</option>
+                    <option value='medium' disabled>Medium Bot</option>
+                    <option value='hard' disabled>Hard Bot</option>
                 </select>
             </div>
 
