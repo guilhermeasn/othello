@@ -137,3 +137,14 @@ button {
     padding: 10px;
     border-radius: 10px;
 }
+
+label {
+    color: #f7f8f9;
+    font-size: larger;
+    margin-right: 10px;
+}
+
+select {
+    padding: 10px 20px;
+    border-radius: 10px;
+}
