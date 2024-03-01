@@ -22,9 +22,21 @@ export default function App() {
                         <div className="strong">{ nextMove.player }&nbsp;player</div>
                     </>
                 ) : (
-                    <div className="strong red">Game End</div>
+                    <div className="strong red">
+                        {
+                            status.black > status.white ? 'Black Win' :
+                            status.black < status.white ? 'White Win' :
+                            'Game Tied'
+                        }
+                    </div>
                 ) }
             </div>
+
+            <Board
+                data={ othello.getBoard() }
+                movies={ nextMove === null ? [] : nextMove.moves }
+                onClick={ position => setNextMove(othello.makeMove(position)) }
+            />
 
             <div className="status">
                 { Object.keys(status).map(k => (
@@ -33,12 +45,6 @@ export default function App() {
                     </div>
                 )) }
             </div>
-
-            <Board
-                data={ othello.getBoard() }
-                movies={ nextMove === null ? [] : nextMove.moves }
-                onClick={ position => setNextMove(othello.makeMove(position)) }
-            />
 
             <div className="buttons">
                 <p><button onClick={ () => setNextMove(othello.backMove()) } disabled={ !othello.isReturnable() }>Back</button></p>
