@@ -87,16 +87,31 @@ main {
 }
 
 .player {
-    width: 250px;
-    height: 75px;
+    width: 400px;
+    height: 50px;
     border: #6d57ff 3px solid;
     background-color: #aa9cff;
     border-radius: 10px;
     margin: 10px;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     align-items: center;
     align-content: space-between;
+}
+
+.status {
+    width: 400px;
+    height: 40px;
+    margin: 10px 0 0 0;
+    padding: 10px 20px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    border: #111 3px solid;
+    background-color: #ccc;
+    border-radius: 10px;
 }
 
 .strong {
@@ -120,19 +135,5 @@ main {
 button {
     cursor: pointer;
     padding: 10px;
-    border-radius: 10px;
-}
-
-.status {
-    min-width: 450px;
-    height: 50px;
-    margin: 10px 0 0 0;
-    display: flex;
-    flex-flow: row;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-    border: #111 3px solid;
-    background-color: #ccc;
     border-radius: 10px;
 }
