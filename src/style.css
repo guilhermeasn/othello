@@ -3,22 +3,30 @@
     padding: 0;
 }
 
+body {
+    background-color: #212529;
+}
+
 p {
     margin: 10px;
 }
 
 main {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     text-align: center;
     margin: 10px auto;
 }
 
 .board-root {
-    border: 3px solid #234;
+    border: 7px solid #005a41;
     border-radius: 10px;
-    padding: 5px;
+    padding: 7px;
+    margin: 20px;
     display: inline-block;
     width: fit-content;
-    background-color: #dfd;
+    background-color: #009067;
 }
 
 .board-row {
@@ -26,14 +34,14 @@ main {
 }
 
 .board-cell {
-    border: 2px solid #789;
+    border: 1px solid #444;
     border-radius: 5px;
     margin: 1px;
     width: 3rem;
     height: 3rem;
 }
 
-.board-black, .board-white {
+.board-black, .board-white, .board-play {
     width: 2rem;
     height: 2rem;
     border-radius: 3rem;
@@ -41,26 +49,31 @@ main {
 }
 
 .board-black {
-    background-color: #222;
-    box-shadow: #000 2px 2px 2px 2px;
+    background-color: #111;
+    box-shadow: #000 3px 2px 2px 2px;
     animation-name: opacity1;
-    animation-duration: 3s;
+    animation-duration: 1.5s;
 }
 
 .board-white {
-    background-color: #ddd;
-    box-shadow: #555 3px 2px 2px 2px;
+    background-color: #fff;
+    box-shadow: #000 3px 2px 2px 2px;
     animation-name: opacity2;
-    animation-duration: 3s;
+    animation-duration: 1.5s;
+}
+
+.board-play {
+    background-color: #000;
+    opacity: .2;
 }
 
 .board-cell-play {
+    background-color: #00a576;
     cursor: pointer;
-    background-color: #ccc;
 }
 
 .board-cell-play:hover {
-    background-color: #aaa;
+    background-color: #007453;
 }
 
 @keyframes opacity1 {
@@ -71,4 +84,55 @@ main {
 @keyframes opacity2 {
     from {opacity: .5;}
     to {opacity: 1;}
+}
+
+.player {
+    width: 250px;
+    height: 75px;
+    border: #6d57ff 3px solid;
+    background-color: #aa9cff;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+}
+
+.strong {
+    text-transform: uppercase;
+    font-size: large;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.red {
+    color: #700;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+    text-align: center;
+}
+
+button {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.status {
+    min-width: 450px;
+    height: 50px;
+    margin: 10px 0 0 0;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    border: #111 3px solid;
+    background-color: #ccc;
+    border-radius: 10px;
 }
