@@ -100,11 +100,26 @@ export default class Othello {
 
     }
 
+    static isValidGameString(gameString : string) : boolean {
+
+        if(!/^([a-h][1-8]){0,60}$/i.test(gameString)) return false;
+
+        try {
+            new Othello('!' + gameString);
+            return true;
+        } catch(error) {
+            return false;
+        }
+
+    }
+
     static getMovesByString(gameString : string) : Position[] {
 
+        const ignoreError : boolean = gameString.charAt(0) === '!';
         gameString = gameString.toLowerCase();
 
-        if(!/^([a-h][1-8]){0,60}$/.test(gameString)) {
+        if(ignoreError) gameString = gameString.substring(1);
+        else if(!Othello.isValidGameString(gameString)) {
             throw Error('Game String incorrect format');
         }
 

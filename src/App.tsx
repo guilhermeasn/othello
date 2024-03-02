@@ -21,6 +21,12 @@ export default function App() {
     
     const status = othello.getStatus();
 
+    const load = () : void => {
+        const gameString : string = prompt('Enter the game moves with the pattern ([a-h][1-8]){0.60}') ?? '';
+        if(Othello.isValidGameString(gameString)) setOthello(new Othello(gameString));
+        else alert('Invalid Game!');
+    }
+
     useEffect(() => setNextMove(othello.getNextMove()), [ othello ]);
 
     useEffect(() => {
@@ -90,6 +96,8 @@ export default function App() {
             <div className="buttons">
                 <p><button onClick={ () => setNextMove(othello.backMove()) } disabled={ !othello.isReturnable() }>Back</button></p>
                 <p><button onClick={ () => setOthello(new Othello()) } disabled={ !othello.isReturnable() }>Reset</button></p>
+                <p><button onClick={ () => alert(`Moves: ${ othello.getGameString() }`) } disabled={ !othello.isReturnable() }>Moves</button></p>
+                <p><button onClick={ load }>Load</button></p>
             </div>
             
         </main>
