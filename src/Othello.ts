@@ -23,6 +23,8 @@ export type History = {
 
 export default class Othello {
 
+    public static readonly cols : string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
     private _player : Player;
     private _moves : Position[];
     private _board : Board;
@@ -93,7 +95,7 @@ export default class Othello {
         let game : string = '';
 
         this._moves.forEach(({ row, col }) => {
-            game += ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'][col] + (row + 1);
+            game += Othello.cols[col] + (row + 1);
         });
 
         return game;
@@ -128,7 +130,7 @@ export default class Othello {
         for(let [ move ] of gameString.matchAll(/[a-h][1-8]/g)) {
             moves.push({
                 row: parseInt(move.charAt(1)) - 1,
-                col: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].findIndex(v => v === move.charAt(0))
+                col: Othello.cols.findIndex(v => v === move.charAt(0))
             });
         }
 

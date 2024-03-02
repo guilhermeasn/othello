@@ -1,4 +1,5 @@
 import type { Board as BoardData, Cell, Position } from "./Othello";
+import Othello from "./Othello";
 
 export type BoardProps = {
     data : BoardData,
@@ -20,7 +21,7 @@ export default function Board({ data, movies, onClick = () => {} } : BoardProps)
                 
                 <div key={ row } className="board-row">
                     { Array(8).fill(null).map((_, col) => (
-                        <BoardCell key={ col } variant={ isPlayed({ row, col }) ? 'play' : data[row][col] } onClick={ () => onClick({ row, col }) } />
+                        <BoardCell key={ col } name={ Othello.cols[col].toUpperCase() + (row + 1) } variant={ isPlayed({ row, col }) ? 'play' : data[row][col] } onClick={ () => onClick({ row, col }) } />
                     )) }
                 </div>
 
@@ -33,13 +34,14 @@ export default function Board({ data, movies, onClick = () => {} } : BoardProps)
 }
 
 type CellProps = {
+    name : string;
     variant : Cell | 'play';
     onClick : () => void
 }
 
-function BoardCell({ variant, onClick } : CellProps) {
+function BoardCell({ name, variant, onClick } : CellProps) {
     return (
-        <div onClick={ variant === 'play' ? onClick : undefined  } className={ `board-cell board-cell-${ variant }` }>
+        <div title={ name } onClick={ variant === 'play' ? onClick : undefined  } className={ `board-cell board-cell-${ variant }` }>
             <div className={ `board-${ variant }` } />
         </div>
     )
