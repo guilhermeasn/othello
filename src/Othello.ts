@@ -56,7 +56,7 @@ export default class Othello {
 
         if(gameString) {
             const moves = Othello.getMovesByString(gameString);
-            moves.forEach(move => { console.log(move); this.makeMove(move) });
+            moves.forEach(move => this.makeMove(move));
         }
 
     }
