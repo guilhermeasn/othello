@@ -34,6 +34,9 @@ jobs:
         run: yarn && yarn build
 
       - name: Domain
+        run: echo -n othello.gn.dev.br > build/CNAME
+
+      - name: Domain
         run: echo -n lotofacil.gn.dev.br > build/CNAME
 
       - name: Setup Pages

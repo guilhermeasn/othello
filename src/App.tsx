@@ -67,6 +67,14 @@ export default function App() {
                 ) }
             </div>
 
+            <div className="status">
+                { Object.keys(status).map(k => (
+                    <div className="strong" key={ k }>
+                        { k }:&nbsp;{ status[k as keyof Status] }
+                    </div>
+                )) }
+            </div>
+
             <Board
                 data={ othello.getBoard() }
                 movies={ nextMove === null || play[nextMove.player] !== 'user' ? [] : nextMove.moves }
@@ -83,14 +91,6 @@ export default function App() {
                             {/* <option value='medium'>Medium Bot</option> */}
                             <option value='hard'>Hard Bot</option>
                         </select>
-                    </div>
-                )) }
-            </div>
-
-            <div className="status">
-                { Object.keys(status).map(k => (
-                    <div className="strong" key={ k }>
-                        { k }:&nbsp;{ status[k as keyof Status] }
                     </div>
                 )) }
             </div>
