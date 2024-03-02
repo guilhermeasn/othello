@@ -98,7 +98,7 @@ export default function App() {
                 <p><button onClick={ () => setNextMove(othello.backMove()) } disabled={ !othello.isReturnable() }>Back</button></p>
                 <p><button onClick={ () => setOthello(new Othello()) } disabled={ !othello.isReturnable() }>Reset</button></p>
                 <p><button onClick={ () => alert(`Moves: ${ othello.getGameString() }`) } disabled={ !othello.isReturnable() }>Moves</button></p>
-                <p><button onClick={ load }>Load</button></p>
+                <p><button onClick={ load } disabled={ othello.isReturnable() }>Load</button></p>
             </div>
             
         </main>
