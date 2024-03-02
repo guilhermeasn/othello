@@ -20,6 +20,7 @@ export default function App() {
     const [ nextMove, setNextMove ] = useState<NextMove>(null);
     
     const status = othello.getStatus();
+    const isReturnable = othello.isReturnable();
 
     const load = () : void => {
         const gameString = prompt('Enter the game moves with the pattern ([a-h][1-8]){0,60}');
@@ -95,10 +96,10 @@ export default function App() {
             </div>
 
             <div className="buttons">
-                <p><button onClick={ () => setNextMove(othello.backMove()) } disabled={ !othello.isReturnable() }>Back</button></p>
-                <p><button onClick={ () => setOthello(new Othello()) } disabled={ !othello.isReturnable() }>Reset</button></p>
-                <p><button onClick={ () => alert(`Moves: ${ othello.getGameString() }`) } disabled={ !othello.isReturnable() }>Moves</button></p>
-                <p><button onClick={ load } disabled={ othello.isReturnable() }>Load</button></p>
+                <p><button onClick={ () => setNextMove(othello.backMove()) } disabled={ !isReturnable }>Back</button></p>
+                <p><button onClick={ () => setOthello(new Othello()) } disabled={ !isReturnable }>Reset</button></p>
+                <p><button onClick={ () => alert(`Moves: ${ othello.getGameString() }`) } disabled={ !isReturnable }>Moves</button></p>
+                <p><button onClick={ load } disabled={ isReturnable }>Load</button></p>
             </div>
             
         </main>
