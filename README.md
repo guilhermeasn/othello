@@ -5,6 +5,7 @@
 ## Play
 
 [https://othello.gn.dev.br/](https://othello.gn.dev.br/)
+
 [https://guilhermeasn.github.io/othello/](https://guilhermeasn.github.io/othello/)
 
 ## Author
