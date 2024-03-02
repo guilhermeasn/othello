@@ -1,8 +1,8 @@
-# Jogo Othello (Reversi)
+# Othello (Reversi) Game
 
 [![Deploy](https://github.com/guilhermeasn/othello/actions/workflows/build.yml/badge.svg)](https://github.com/guilhermeasn/othello/actions/workflows/build.yml)
 
-## Para utilizar acesse
+## Play
 
 [https://guilhermeasn.github.io/othello/](https://guilhermeasn.github.io/othello/)
 
