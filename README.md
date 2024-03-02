@@ -6,6 +6,6 @@
 
 [https://guilhermeasn.github.io/othello/](https://guilhermeasn.github.io/othello/)
 
-## Autor
+## Author
 
 &lt;gn.dev.br/&gt;
