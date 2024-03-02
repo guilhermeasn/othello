@@ -29,7 +29,7 @@ export default class Othello {
 
     private _histories : History[];
 
-    constructor() {
+    constructor(gameString ?: string) {
 
         this._player = 'black';
         this._moves = [];
@@ -52,6 +52,11 @@ export default class Othello {
             }
         }
 
+        if(gameString) {
+            const moves = Othello.getMovesByString(gameString);
+            moves.forEach(move => { console.log(move); this.makeMove(move) });
+        }
+
     }
 
     getPlayer() : Player {
@@ -64,40 +69,6 @@ export default class Othello {
 
     getBoard() : Board {
         return this._board;
-    }
-
-    getGameString() : string {
-        
-        let game : string = '';
-
-        this._moves.forEach(({ row, col }) => {
-            game += ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'][col] + (row + 1) + '-';
-        });
-
-        return game.replace(/-$/, '');
-
-    }
-
-    getMovesByString(gameString : string) : Position[] {
-
-        gameString = gameString.toLowerCase().trim();
-        if(gameString === '') return [];
-
-        if(!/^([a-h][1-8]-)*([a-h][1-8])$/.test(gameString)) {
-            throw Error('Game String incorrect format');
-        }
-
-        let moves : Position[] = [];
-
-        gameString.split('-').forEach(move => {
-            moves.push({
-                row: parseInt(move.charAt(1)) - 1,
-                col: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].findIndex(v => v === move.charAt(0))
-            })
-        });
-
-        return moves;
-
     }
 
     getStatus() : Status {
@@ -115,6 +86,39 @@ export default class Othello {
             moves: this.validMoves()
         } : null;
         
+    }
+
+    getGameString() : string {
+        
+        let game : string = '';
+
+        this._moves.forEach(({ row, col }) => {
+            game += ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'][col] + (row + 1);
+        });
+
+        return game;
+
+    }
+
+    static getMovesByString(gameString : string) : Position[] {
+
+        gameString = gameString.toLowerCase();
+
+        if(!/^([a-h][1-8]){0,60}$/.test(gameString)) {
+            throw Error('Game String incorrect format');
+        }
+
+        let moves : Position[] = [];
+
+        for(let [ move ] of gameString.matchAll(/[a-h][1-8]/g)) {
+            moves.push({
+                row: parseInt(move.charAt(1)) - 1,
+                col: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].findIndex(v => v === move.charAt(0))
+            });
+        }
+
+        return moves;
+
     }
 
     isReturnable() : boolean {
