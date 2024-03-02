@@ -22,7 +22,7 @@ export default function App() {
     const status = othello.getStatus();
 
     const load = () : void => {
-        const gameString : string = prompt('Enter the game moves with the pattern ([a-h][1-8]){0.60}') ?? '';
+        const gameString : string = prompt('Enter the game moves with the pattern ([a-h][1-8]){0,60}') ?? '';
         if(Othello.isValidGameString(gameString)) setOthello(new Othello(gameString));
         else alert('Invalid Game!');
     }
