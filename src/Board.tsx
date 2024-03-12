@@ -21,7 +21,7 @@ export default function Board({ data, movies, onClick = () => {} } : BoardProps)
                 
                 <div key={ row } className="board-row">
                     { Array(8).fill(null).map((_, col) => (
-                        <BoardCell key={ col } name={ Othello.cols[col].toUpperCase() + (row + 1) } variant={ isPlayed({ row, col }) ? 'play' : data[row][col] } onClick={ () => onClick({ row, col }) } />
+                        <BoardCell key={ col } name={ Othello.cols[col].toUpperCase() + Othello.rows[row] } variant={ isPlayed({ row, col }) ? 'play' : data[row][col] } onClick={ () => onClick({ row, col }) } />
                     )) }
                 </div>
 
