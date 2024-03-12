@@ -86,7 +86,7 @@ export default class Othello {
 
         return validMoves.length > 0 ? {
             player: this._player,
-            moves: this.validMoves()
+            moves: validMoves
         } : null;
         
     }
